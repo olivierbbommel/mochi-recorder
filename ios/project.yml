@@ -1,0 +1,42 @@
+name: MochiPhone
+options:
+  bundleIdPrefix: ${MOCHI_BUNDLE_ID}
+  deploymentTarget:
+    iOS: "27.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    # From the environment (source ../mochi.env before running xcodegen). See README.
+    DEVELOPMENT_TEAM: ${MOCHI_TEAM_ID}
+    MOCHI_SUPABASE_URL: ${MOCHI_SUPABASE_URL}
+    MOCHI_SUPABASE_KEY: ${MOCHI_SUPABASE_KEY}
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "27.0"
+    # Bump CURRENT_PROJECT_VERSION for every TestFlight upload.
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "6"
+
+packages:
+  Mochi:
+    path: ..
+
+targets:
+  MochiPhone:
+    type: application
+    platform: iOS
+    sources:
+      - path: MochiPhone
+    dependencies:
+      - package: Mochi
+        product: MochiKit
+      - package: Mochi
+        product: MochiTranscribe
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${MOCHI_BUNDLE_ID}.ios
+        PRODUCT_NAME: Mochi
+        INFOPLIST_FILE: MochiPhone/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
